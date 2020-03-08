@@ -1,0 +1,78 @@
+version: '3.0'
+services:
+
+    zookeeper_1:
+        image: digitalwonderland/zookeeper
+        container_name: zookeeper_1
+        environment:
+              ZOOKEEPER_SERVER_ID: 1
+              ZOOKEEPER_CLIENT_PORT: 2181
+              ZOOKEEPER_TICK_TIME: 2000
+              ZOOKEEPER_INIT_LIMIT: 5
+              ZOOKEEPER_SYNC_LIMIT: 2
+              ZOOKEEPER_SERVERS: localhost:2777:2888;localhost:3777:3888;localhost:4777:4888
+        network_mode: host
+                    
+    zookeeper_2:
+        image: digitalwonderland/zookeeper
+        container_name: zookeeper_2
+        environment:
+              ZOOKEEPER_SERVER_ID: 2
+              ZOOKEEPER_CLIENT_PORT: 2182
+              ZOOKEEPER_TICK_TIME: 2000
+              ZOOKEEPER_INIT_LIMIT: 5
+              ZOOKEEPER_SYNC_LIMIT: 2
+              ZOOKEEPER_SERVERS: localhost:2777:2888;localhost:3777:3888;localhost:4777:4888
+        network_mode: host
+            
+    zookeeper_3:
+        image: digitalwonderland/zookeeper
+        container_name: zookeeper_3
+        environment:
+              ZOOKEEPER_SERVER_ID: 3
+              ZOOKEEPER_CLIENT_PORT: 2183
+              ZOOKEEPER_TICK_TIME: 2000
+              ZOOKEEPER_INIT_LIMIT: 5
+              ZOOKEEPER_SYNC_LIMIT: 2
+              ZOOKEEPER_SERVERS: localhost:2777:2888;localhost:3777:3888;localhost:4777:4888
+        network_mode: host
+            
+    kafka_1:
+        image: wurstmeister/kafka
+        container_name: kafka_1
+        network_mode: host
+        depends_on:
+            - zookeeper_1
+            - zookeeper_2
+            - zookeeper_3
+        environment:
+            KAFKA_BROKER_ID: 1
+            KAFKA_ZOOKEEPER_CONNECT: localhost:2181,localhost:2182,localhost:2183
+            KAFKA_ADVERTISED_LISTENERS: localhost:9092
+
+    kafka_2:
+        image: wurstmeister/kafka
+        container_name: kafka_2
+        network_mode: host
+        depends_on:
+            - zookeeper_1
+            - zookeeper_2
+            - zookeeper_3
+        environment:
+            KAFKA_BROKER_ID: 2
+            KAFKA_ZOOKEEPER_CONNECT: localhost:2181,localhost:2182,localhost:2183
+            KAFKA_ADVERTISED_LISTENERS: localhost:9093
+
+    kafka_3:
+        image: wurstmeister/kafka
+        container_name: kafka_3
+        network_mode: host
+        depends_on:
+            - zookeeper_1
+            - zookeeper_2
+            - zookeeper_3
+        environment:
+            KAFKA_BROKER_ID: 3
+            KAFKA_ZOOKEEPER_CONNECT: localhost:2181,localhost:2182,localhost:2183
+            KAFKA_ADVERTISED_LISTENERS: localhost:9094
+            
