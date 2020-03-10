@@ -49,6 +49,8 @@ services:
             KAFKA_BROKER_ID: 1
             KAFKA_ZOOKEEPER_CONNECT: localhost:2181,localhost:2182,localhost:2183
             KAFKA_ADVERTISED_LISTENERS: localhost:9092
+        ports:
+            - "9092:9092"
 
     kafka_2:
         image: wurstmeister/kafka
@@ -62,6 +64,8 @@ services:
             KAFKA_BROKER_ID: 2
             KAFKA_ZOOKEEPER_CONNECT: localhost:2181,localhost:2182,localhost:2183
             KAFKA_ADVERTISED_LISTENERS: localhost:9093
+        ports:
+            - "9093:9093"
 
     kafka_3:
         image: wurstmeister/kafka
@@ -75,4 +79,6 @@ services:
             KAFKA_BROKER_ID: 3
             KAFKA_ZOOKEEPER_CONNECT: localhost:2181,localhost:2182,localhost:2183
             KAFKA_ADVERTISED_LISTENERS: localhost:9094
+        ports:
+            - "9094:9094"
             
